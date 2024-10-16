@@ -1,0 +1,9 @@
+#!/bin/sh
+killall ciplushelper 2>/dev/null
+update-rc.d -f ciplushelper remove 2>/dev/null
+rm -rf /etc/init.d/ciplushelper 2>/dev/null
+rm -rf /usr/bin/ciplushelper 2>/dev/null
+rm -rf /etc/ciplus 2>/dev/null
+rm -rf /etc/cicert.bin 2>/dev/null
+rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper 2>/dev/null
+exit 0

@@ -1,0 +1,3 @@
+#!/bin/sh
+killall ciplushelper 2>/dev/null
+exit 0

@@ -1,0 +1,69 @@
+#!/bin/sh
+
+ZMODEL="no"
+echo "" > /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt
+
+if [ -f /proc/stb/info/model ] ; then
+	if grep h7 /proc/stb/info/model > /dev/null ; then
+		ZMODEL="zgemma-arm"
+	elif grep h10 /proc/stb/info/model > /dev/null ; then
+		ZMODEL="zgemma-arm"
+	elif grep h9combo /proc/stb/info/model > /dev/null ; then
+		ZMODEL="zgemma-arm"
+	elif grep h9twin  /proc/stb/info/model > /dev/null ; then
+		ZMODEL="zgemma-arm"
+	fi
+fi
+
+if [ -f /proc/stb/info/boxtype ] ; then
+	MODEL=$( cat /proc/stb/info/boxtype )
+	if [ $ZMODEL = "zgemma-arm" ] || [ $MODEL = "hd51" ] || [ $MODEL = "vs1500" ] || [ $MODEL = "h6" ] || [ $MODEL = "h7" ] || [ $MODEL = "h9combo" ] || [ $MODEL = "h9twin" ] || [ $MODEL = "h9combose" ] || [ $MODEL = "h9twinse" ] || [ $MODEL = "h10" ] || [ $MODEL = "hd2400" ] || [ $MODEL = "hd1500" ] || [ $MODEL = "et8000" ] || [ $MODEL = "et10000" ] || [ $MODEL = "formuler1" ] || [ $MODEL = "formuler3" ] || [ $MODEL = "formuler4" ] || [ $MODEL = "pulse4k" ] || [ $MODEL = "pulse4kmini" ] ; then
+		kernel_version=`uname -r`
+		echo "kernel = $kernel_version"
+		if [ $ZMODEL = "zgemma-arm" ] || [ $MODEL = "hd51" ] || [ $MODEL = "vs1500" ] || [ $MODEL = "h7" ] || [ $MODEL = "h9combo" ] || [ $MODEL = "h9twin" ] || [ $MODEL = "h9combose" ] || [ $MODEL = "h9twinse" ] || [ $MODEL = "h10" ] || [ $MODEL = "pulse4k" ] || [ $MODEL = "pulse4kmini" ] ; then
+			if [ ${kernel_version:0:3} == 4.1 ] || [ ${kernel_version:0:3} == 4.4 ]; then
+				echo "new ci helper for hd51/vs1500/h7/h9combo/h9twin/h9twinse/h9combose/h10/pulse4k/pulse4kmini"
+				killall ciplushelper 2>/dev/null
+				sleep 2
+				cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin/arm/ciplushelper /usr/bin/ciplushelper
+				chmod -R 755 /usr/bin/ciplushelper
+				cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper.sh /etc/init.d/ciplushelper
+				chmod -R 755 /etc/init.d/ciplushelper
+				update-rc.d ciplushelper defaults 50
+				echo "ciplushelper-arm" > /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt
+				rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin/mipsel32 2>/dev/null
+				rm -rf /etc/cicert.bin 2>/dev/null
+				echo "zmodel = $ZMODEL"
+				echo "model = $MODEL"
+			fi
+		else
+			if [ ${kernel_version:0:3} == 4.1 ] ; then
+				echo "new ci helper for hd2400/hd1500/Zgemma H6/Xtrend (et8000/et10000)/formuler (1/3/4)"
+				killall ciplushelper 2>/dev/null
+				sleep 2
+				mv /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin/mipsel32/ciplushelper /usr/bin/ciplushelper
+				chmod -R 755 /usr/bin/ciplushelper
+				cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper.sh /etc/init.d/ciplushelper
+				chmod -R 755 /etc/init.d/ciplushelper
+				update-rc.d ciplushelper defaults 50
+				echo "ciplushelper-mipsel32" > /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt
+				rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin 2>/dev/null
+				rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/cicert.bin 2>/dev/null
+				echo "zmodel = $ZMODEL"
+				echo "model = $MODEL"
+			fi
+		fi
+	fi
+fi
+
+echo "*********************************"
+echo "         Warning!!!              "
+echo "      Need reboot box!!!         "
+echo "                                 "
+
+if [ -z "`cat /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt`" ] ; then
+	rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin 2>/dev/null
+	rm -rf /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/cicert.bin 2>/dev/null
+fi
+
+exit 0
