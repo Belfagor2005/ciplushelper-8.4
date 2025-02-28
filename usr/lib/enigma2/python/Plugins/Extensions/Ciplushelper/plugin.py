@@ -11,12 +11,14 @@ from Components.SystemInfo import SystemInfo
 from enigma import eTimer, eDVBCI_UI, getDesktop
 from Components.config import config, ConfigYesNo
 from os import popen, system
-from os.path import exists
+from os.path import exists, join
 config.misc.ci_auto_check_module = ConfigYesNo(False)
 
+version = "1"
+plugin_path = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper"
+info_path = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt"
+ciplushelper_sh = join(plugin_path, "ciplushelper.sh")
 ciplushelper = "/etc/init.d/ciplushelper"
-
-version = "4"
 
 
 class Ciplushelper(Screen):
@@ -40,7 +42,6 @@ class Ciplushelper(Screen):
 		menu_list.append((_("Supported models"), "about_ciplushelper"))
 		model = ""
 
-		info_path = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt"
 		if exists(info_path):
 			try:
 				with open(info_path, "r") as f:
@@ -86,7 +87,7 @@ class Ciplushelper(Screen):
 						copy = False
 
 				if copy:
-					cmd = "cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper.sh %s && chmod 755 %s" % (ciplushelper, ciplushelper)
+					cmd = "cp {} {} && chmod 755 {}".format(ciplushelper_sh, ciplushelper, ciplushelper)
 					system(cmd)
 			except IOError:
 				pass
@@ -104,12 +105,12 @@ class Ciplushelper(Screen):
 		if returnValue:
 			returnValue = returnValue[1]
 			commands = {
-				"enable": "%s enable_autostart" % ciplushelper,
-				"disable": "%s disable_autostart" % ciplushelper,
-				"start": "%s start" % ciplushelper,
-				"stop": "%s stop" % ciplushelper,
-				"install_sert": "cp -R /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplus /etc/ciplus",
-				"install_cicert_bin": "cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/cicert.bin /etc/cicert.bin",
+				"enable": "{} enable_autostart".format(ciplushelper),
+				"disable": "{} disable_autostart".format(ciplushelper),
+				"start": "{} start".format(ciplushelper),
+				"stop": "{} stop".format(ciplushelper),
+				"install_sert": "cp -R {}/ciplus /etc/ciplus".format(plugin_path),
+				"install_cicert_bin": "cp {}/cicert.bin /etc/cicert.bin".format(plugin_path),
 				"install_default": "rm -rf /etc/cicert.bin",
 				"remove_sert": "rm -rf /etc/ciplus",
 				"disable_ciplus0": "mv /etc/ciplus0_enable /etc/ciplus0_disable",
@@ -139,7 +140,7 @@ class Ciplushelper(Screen):
 				if "ciplushelper" in self.ret:
 					system("killall ciplushelper 2>/dev/null && sleep 2")
 
-				system("cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin/zgemma-arm/ciplushelper /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper")
+				system("cp {}/ciplushelper_bin/zgemma-arm/ciplushelper /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper".format(plugin_path))
 
 				if "ciplushelper" in self.ret:
 					self.session.open(Console, _("Start ciplushelper"), ["/etc/init.d/ciplushelper start && echo 'Need restart GUI'"])
@@ -150,7 +151,9 @@ class Ciplushelper(Screen):
 				if "ciplushelper" in self.ret:
 					system("killall ciplushelper 2>/dev/null && sleep 2")
 
-				system("cp /usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin/arm/ciplushelper /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper")
+				system("cp {} /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper".format(
+					join(plugin_path, "ciplushelper_bin", "arm", "ciplushelper")
+				))
 
 				if "ciplushelper" in self.ret:
 					self.session.open(Console, _("Start ciplushelper"), ["/etc/init.d/ciplushelper start && echo 'Need restart GUI'"])
