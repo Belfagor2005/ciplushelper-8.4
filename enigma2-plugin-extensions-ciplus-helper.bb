@@ -18,10 +18,10 @@ SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;bra
 BINARIES_DIR = "${S}/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin"
 
 
-# FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/*"
+FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/*"
 
 # RDEPENDS_${PN} = "libc libdl glibc"
-FILES_${PN} = "/usr/* "
+# FILES_${PN} = "/usr/* "
 
 do_install() {
     cp -rp ${S}/usr* ${D}/
