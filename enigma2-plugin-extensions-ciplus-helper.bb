@@ -17,14 +17,16 @@ S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=master"
 
 
-BINARIES_DIR = "${S}/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin"
+BINARIES_DIR = "${S}/ciplushelper_bin"
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/*"
+# RDEPENDS_${PN} += "glibc"
 
-# RDEPENDS_${PN} = "libc libdl glibc"
+# RDEPENDS_${PN} = "libc glibc"
 # FILES_${PN} = "/usr/* "
-IMAGE_INSTALL_append = "libc libsdl glibc"
+IMAGE_INSTALL_append = "libsdl2-2.0-dev glibc"
 
 do_install() {
+
     cp -rp ${S}/usr* ${D}/
     
     if [ "${TARGET_ARCH}" = "armv7a" ]; then
