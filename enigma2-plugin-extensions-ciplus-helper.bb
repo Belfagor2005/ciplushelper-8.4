@@ -14,7 +14,7 @@ PKGV = "1.0+git${GITPKGV}"
 VER ="1.0"
 PR = "r0"
 
-SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=main"
+SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=master"
 
 S = "${WORKDIR}/git"
 
