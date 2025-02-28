@@ -13,19 +13,40 @@ from Components.MenuList import MenuList
 from Components.SystemInfo import SystemInfo
 from enigma import eTimer, eDVBCI_UI, getDesktop
 from Components.config import config, ConfigYesNo
-from os import popen, system
+from os import popen, system, remove, makedirs
 from os.path import exists, join
-config.misc.ci_auto_check_module = ConfigYesNo(False)
+import tarfile
+
 
 version = "1"
 plugin_path = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper"
 info_path = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/info.txt"
 ciplushelper_sh = join(plugin_path, "ciplushelper.sh")
 ciplushelper = "/etc/init.d/ciplushelper"
+ciplushelperbin = join(plugin_path, "ciplushelper_bin")
+config.misc.ci_auto_check_module = ConfigYesNo(False)
+tar_path = join(plugin_path, "ciplushelper_bin.tar")
+
+
+def extract_and_remove_tar():
+	if exists(tar_path):
+		extract_path = join(plugin_path, "ciplushelper_bin")
+		if not exists(extract_path):
+			makedirs(extract_path)
+		with tarfile.open(tar_path, "r") as tar:
+			print("Estrazione dei file...")
+			for member in tar.getmembers():
+				print(f"Estrazione del file: {member.name}")
+				tar.extract(member, path=extract_path)
+		remove(tar_path)
+		print("File .tar rimosso.")
+
+
+extract_and_remove_tar()
 
 
 class Ciplushelper(Screen):
-	if getDesktop(0).size().width() >= 1920:
+	if getDesktop(0).size().width() >= 1280:
 		skin = """
 		<screen position="center,center" size="1020,280" title="CI+ helper menu" >
 			<widget name="menu" position="10,10" size="1000,260" font="Regular;30" itemHeight="36" scrollbarMode="showOnDemand" />
@@ -133,34 +154,39 @@ class Ciplushelper(Screen):
 				self.close()
 				return
 
-			if returnValue == "install_cicert_bin":
-				for i in range(2):
-					file_enable = "/etc/ciplus%d_enable" % i
-					file_disable = "/etc/ciplus%d_disable" % i
-					if not exists(file_enable) or not exists(file_disable):
-						system("echo 'rename ciplus*_enable to ciplus*_disable for deactivate ciplus certification of the module.' > %s" % file_enable)
+			if exists(ciplushelperbin):
+				if returnValue == "install_cicert_bin":
+					for i in range(2):
+						file_enable = "/etc/ciplus%d_enable" % i
+						file_disable = "/etc/ciplus%d_disable" % i
+						if not exists(file_enable) or not exists(file_disable):
+							system("echo 'rename ciplus*_enable to ciplus*_disable for deactivate ciplus certification of the module.' > %s" % file_enable)
 
-				if "ciplushelper" in self.ret:
-					system("killall ciplushelper 2>/dev/null && sleep 2")
+					if "ciplushelper" in self.ret:
+						system("killall ciplushelper 2>/dev/null && sleep 2")
 
-				system("cp {}/ciplushelper_bin/zgemma-arm/ciplushelper /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper".format(plugin_path))
+					system("cp {}/ciplushelper_bin/zgemma-arm/ciplushelper /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper".format(plugin_path))
 
-				if "ciplushelper" in self.ret:
-					self.session.open(Console, _("Start ciplushelper"), ["/etc/init.d/ciplushelper start && echo 'Need restart GUI'"])
-				self.close()
-				return
+					if "ciplushelper" in self.ret:
+						self.session.open(Console, _("Start ciplushelper"), ["/etc/init.d/ciplushelper start && echo 'Need restart GUI'"])
+					self.close()
+					return
 
-			if returnValue == "install_default":
-				if "ciplushelper" in self.ret:
-					system("killall ciplushelper 2>/dev/null && sleep 2")
+				if returnValue == "install_default":
+					if "ciplushelper" in self.ret:
+						system("killall ciplushelper 2>/dev/null && sleep 2")
 
-				system("cp {} /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper".format(
-					join(plugin_path, "ciplushelper_bin", "arm", "ciplushelper")
-				))
+					system("cp {} /usr/bin/ciplushelper && chmod 755 /usr/bin/ciplushelper".format(
+						join(plugin_path, "ciplushelper_bin", "arm", "ciplushelper")
+					))
 
-				if "ciplushelper" in self.ret:
-					self.session.open(Console, _("Start ciplushelper"), ["/etc/init.d/ciplushelper start && echo 'Need restart GUI'"])
-				self.close()
+					if "ciplushelper" in self.ret:
+						self.session.open(Console, _("Start ciplushelper"), ["/etc/init.d/ciplushelper start && echo 'Need restart GUI'"])
+					self.close()
+					return
+			else:
+				message = _("Missing Folder ciplushelper_bin")
+				self.session.open(MessageBox, message, MessageBox.TYPE_INFO)
 				return
 
 			if returnValue == "about_ciplushelper":
