@@ -1,10 +1,9 @@
-Package: enigma2-plugin-extensions-ci_plus_helper-openpli8.x
-Version: 4
-Description: CI+ helper for openPLI 8.x/develop
+Package: enigma2-plugin-extensions-ciplus-helper-openpli
+Version: 1.0
+Description: CI+ helper for openPLI
 Section: base
 Priority: optional
 Maintainer: OE-Core Developers <openembedded-core@lists.openembedded.org>
-License: CLOSED
+License: *
 Architecture: all
 Recommends: update-rc.d
-Depends:
