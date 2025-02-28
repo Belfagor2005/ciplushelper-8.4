@@ -16,22 +16,22 @@ PR = "r0"
 
 SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=master"
 
-RDEPENDS_${PN} = "libc libdl glibc"
-PACKAGE_ARCH = "${MACHINE_ARCH}"
-S = "${WORKDIR}/git"
-
-BINARIES_DIR = "${S}/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin"
-FILES_${PN} = "/usr/*"
+# RDEPENDS_${PN} = "libc libdl glibc"
+FILES_${PN} = "/usr/* "
 
 do_install() {
+    # Copia il contenuto della cartella usr
     cp -rp ${S}/usr* ${D}/
-    
-    if d.getVar('TARGET_ARCH') == 'armv7a':
+
+    # Verifica l'architettura di destinazione direttamente
+    if [ "${TARGET_ARCH}" = "armv7a" ]; then
+        # Installazione del binario per ARM
         install -m 0755 ${BINARIES_DIR}/arm/ciplushelper ${D}${bindir}
-    elif d.getVar('TARGET_ARCH') == 'mipsel32':
+    elif [ "${TARGET_ARCH}" = "mipsel32" ]; then
+        # Installazione del binario per MIPS
         install -m 0755 ${BINARIES_DIR}/mipsel32/ciplushelper ${D}${bindir}
     else
-        bb.warn("Architecture %s not explicitly handled." % d.getVar('TARGET_ARCH'))
+        # Stampa un avviso con echo
+        echo "Architecture ${TARGET_ARCH} not explicitly handled."
     fi
 }
-
