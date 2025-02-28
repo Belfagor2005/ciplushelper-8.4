@@ -13,17 +13,16 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 VER = "1.0"
 PR = "r0"
-
-SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=master"
-BINARIES_DIR = "${S}/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin"
 S = "${WORKDIR}/git"
+SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=master"
 
 
+BINARIES_DIR = "${S}/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin"
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/*"
 
 # RDEPENDS_${PN} = "libc libdl glibc"
 # FILES_${PN} = "/usr/* "
-IMAGE_INSTALL_append = " libdl"
+IMAGE_INSTALL_append = "libc libsdl glibc"
 
 do_install() {
     cp -rp ${S}/usr* ${D}/
