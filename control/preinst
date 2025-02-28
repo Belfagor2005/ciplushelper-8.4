@@ -5,6 +5,11 @@ if [ -f /etc/issue ] ; then
 		echo "*********************************"
 		echo "Found supported image!           "
 		echo "                                 "
+
+	elif grep -qs 'corvoboys' cat /etc/issue; then
+		echo "*********************************"
+		echo "Found supported image!           "
+		echo "                                 "
 	else
 		echo "*********************************"
 		echo "Not supported image! Aborted!    "

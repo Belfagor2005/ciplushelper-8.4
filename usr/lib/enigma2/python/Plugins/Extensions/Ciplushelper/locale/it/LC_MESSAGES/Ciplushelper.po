@@ -8,15 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-28 15:49+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2025-02-28 15:50+0100\n"
+"PO-Revision-Date: 2025-02-28 15:54+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.5\n"
-"X-Poedit-Basepath: ..\n"
+"X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: ⁨plugin - Copia.py⁩:35 plugin.py:37
@@ -29,75 +30,75 @@ msgstr ""
 
 #: ⁨plugin - Copia.py⁩:37 plugin.py:40
 msgid "Supported models"
-msgstr ""
+msgstr "Modelli Supportati"
 
 #: ⁨plugin - Copia.py⁩:53 ⁨plugin - Copia.py⁩:105 plugin.py:58
 msgid "Disable ciplushelper autostart"
-msgstr ""
+msgstr "Disabilita l'avvio automatico di ciplushelper"
 
 #: ⁨plugin - Copia.py⁩:55 ⁨plugin - Copia.py⁩:102 plugin.py:60
 msgid "Enable ciplushelper autostart"
-msgstr ""
+msgstr "Abilita l'avvio automatico di ciplushelper"
 
 #: ⁨plugin - Copia.py⁩:57 ⁨plugin - Copia.py⁩:111 plugin.py:63
 msgid "Stop ciplushelper"
-msgstr ""
+msgstr "Ferma ciplushelper"
 
 #: ⁨plugin - Copia.py⁩:59 ⁨plugin - Copia.py⁩:108 ⁨plugin - Copia.py⁩:137
 #: ⁨plugin - Copia.py⁩:149 plugin.py:65 plugin.py:145 plugin.py:156
 msgid "Start ciplushelper"
-msgstr ""
+msgstr "Avvia ciplushelper"
 
 #: ⁨plugin - Copia.py⁩:62 plugin.py:70
 msgid "Install 'ciplushelper' version from Zgemma"
-msgstr ""
+msgstr "Istalla la versione 'ciplushelper' da Zgemma"
 
 #: ⁨plugin - Copia.py⁩:65
 msgid "Enable '/etc/ciplus0_enable'"
-msgstr ""
+msgstr "Abilita '/etc/ciplus0_enable'"
 
 #: ⁨plugin - Copia.py⁩:67
 msgid "Disable '/etc/ciplus0_disable'"
-msgstr ""
+msgstr "Disabilita '/etc/ciplus0_disable'"
 
 #: ⁨plugin - Copia.py⁩:69
 msgid "Enable '/etc/ciplus1_enable'"
-msgstr ""
+msgstr "Abilita '/etc/ciplus1_enable'"
 
 #: ⁨plugin - Copia.py⁩:71
 msgid "Disable '/etc/ciplus1_disable'"
-msgstr ""
+msgstr "Disabilita '/etc/ciplus1_disable'"
 
 #: ⁨plugin - Copia.py⁩:72 plugin.py:80
 msgid "Install default version 'ciplushelper'"
-msgstr ""
+msgstr "Installa version base 'ciplushelper'"
 
 #: ⁨plugin - Copia.py⁩:92 plugin.py:95
 msgid "Remove '/etc/ciplus'"
-msgstr ""
+msgstr "Rimuovi '/etc/ciplus'"
 
 #: ⁨plugin - Copia.py⁩:94 plugin.py:97
 msgid "Install '/etc/ciplus'"
-msgstr ""
+msgstr "Installa '/etc/ciplus'"
 
 #: ⁨plugin - Copia.py⁩:172 plugin.py:161
 msgid "Support '/usr/bin/ciplushelper' from the manufacturer:\n"
-msgstr ""
+msgstr "Supporto '/usr/bin/ciplushelper' del produttore:\n"
 
 #: ⁨plugin - Copia.py⁩:172 plugin.py:163
 msgid "Other models need '/etc/ciplus'"
-msgstr ""
+msgstr "Altri modelli necessitano di '/etc/ciplus'"
 
 #: ⁨plugin - Copia.py⁩:241 ⁨plugin - Copia.py⁩:248 plugin.py:239 plugin.py:247
 msgid "CI+ helper"
-msgstr ""
+msgstr "CI+ helper"
 
 #: plugin.py:76
 #, python-format
 msgid "Enable '%s'"
-msgstr ""
+msgstr "Abilita '%s'"
 
 #: plugin.py:78
 #, python-format
 msgid "Disable '%s'"
-msgstr ""
+msgstr "Disabilita '%s'"
