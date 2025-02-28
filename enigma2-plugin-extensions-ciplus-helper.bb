@@ -16,20 +16,30 @@ PR = "r0"
 
 SRC_URI = "git://github.com/Belfagor2005/ciplushelper-8.4.git;protocol=https;branch=master"
 BINARIES_DIR = "${S}/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/ciplushelper_bin"
-
 S = "${WORKDIR}/git"
 
+
 FILES_${PN} = "/usr/lib/enigma2/python/Plugins/Extensions/Ciplushelper/*"
-IMAGE_INSTALL_append = " libdl"
+
 # RDEPENDS_${PN} = "libc libdl glibc"
 # FILES_${PN} = "/usr/* "
+IMAGE_INSTALL_append = " libdl"
 
 do_install() {
     cp -rp ${S}/usr* ${D}/
+    
     if [ "${TARGET_ARCH}" = "armv7a" ]; then
-        install -m 0755 ${BINARIES_DIR}/arm/ciplushelper ${D}${bindir}
+        if [ -f ${BINARIES_DIR}/arm/ciplushelper ]; then
+            install -m 0755 ${BINARIES_DIR}/arm/ciplushelper ${D}${bindir}
+        else
+            echo "ARM binary not found"
+        fi
     elif [ "${TARGET_ARCH}" = "mipsel32" ]; then
-        install -m 0755 ${BINARIES_DIR}/mipsel32/ciplushelper ${D}${bindir}
+        if [ -f ${BINARIES_DIR}/mipsel32/ciplushelper ]; then
+            install -m 0755 ${BINARIES_DIR}/mipsel32/ciplushelper ${D}${bindir}
+        else
+            echo "MIPS binary not found"
+        fi
     else
         echo "Architecture ${TARGET_ARCH} not explicitly handled."
     fi
